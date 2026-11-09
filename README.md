@@ -1,6 +1,8 @@
 # logis-community skills
 
-本仓库提供可由 [Vercel Skills CLI](https://www.skills.sh/docs/cli) 安装的 `logis` 技能包。`aliyun-yunxiao-mcp` 指导接入阿里云云效 MCP；`logix-machine-license-issuance` 指导从台账签发与重签 Logix Keygen 单机离线证书。技能说明不包含实际凭据或证书。
+本仓库提供可由 [Vercel Skills CLI](https://www.skills.sh/docs/cli) 安装的 `logis` 技能包。`aliyun-yunxiao-mcp` 指导接入阿里云云效 MCP；`logix-machine-license-issuance` 指导从台账签发与重签 Logix Keygen 单机离线证书。仓库不保存凭据、证书或个人记录。
+
+云效子 Skill 会识别当前 AI 客户端并配置云效 MCP；需要 OAuth 登录时先征得用户同意，再由 agent 发起登录，用户在浏览器完成授权。
 
 ## 安装
 
@@ -30,7 +32,7 @@ npx skills add logis-community/skills -g -a codex
 
 云效子 Skill 面向需要通过云效 MCP 查询组织、项目、工作项、代码库或流水线，以及提交 Bug 或需求的用户。中心站托管地址是 `https://openapi-rdc.aliyuncs.com/ai/mcp`；专有 Region 站使用本组织的 `https://<组织专属域名>/ai/mcp`。默认使用 OAuth 与托管地址；仅在客户端不支持 OAuth 时使用个人访问令牌（PAT）。本地 stdio 需要 Node.js 20 或更新版本。
 
-提交 Bug 或需求时，Skill 会先确认云效项目，默认指派给 `dlx`，创建后获取并返回可验证的工作项链接；若当前接口仅能提供 ID，会如实说明。找不到指定项目时会提醒联系项目负责人添加权限。
+提交 Bug 或需求时，Skill 会先确认云效项目，默认指派给 `dlx`，创建后获取并返回可验证的工作项链接；若当前接口仅能提供 ID，会如实说明。找不到指定项目时会提醒联系项目负责人添加权限。当前 Qoder CLI 没有独立的 MCP OAuth 登录子命令；无法由 agent 发起的授权入口会如实说明。
 
 详细配置及安全要求见 [`aliyun-yunxiao-mcp/SKILL.md`](aliyun-yunxiao-mcp/SKILL.md)。Logix 单机证书的签发、验签和台账回写流程见 [`logix-machine-license-issuance/SKILL.md`](logix-machine-license-issuance/SKILL.md)。
 
