@@ -1,6 +1,6 @@
 # logis-community skills
 
-本仓库提供可由 [Vercel Skills CLI](https://www.skills.sh/docs/cli) 安装的 `logis` 技能包。首个子 Skill `aliyun-yunxiao-mcp` 指导将阿里云云效 MCP Server 接入支持 MCP 的 AI 客户端，不负责代办云效授权或保存凭证。
+本仓库提供可由 [Vercel Skills CLI](https://www.skills.sh/docs/cli) 安装的 `logis` 技能包。`aliyun-yunxiao-mcp` 指导接入阿里云云效 MCP；`logix-machine-license-issuance` 指导从台账签发与重签 Logix Keygen 单机离线证书。技能说明不包含实际凭据或证书。
 
 ## 安装
 
@@ -15,21 +15,24 @@ npx skills add logis-community/skills -g -a codex
 ```text
 ~/.agents/skills/logis/
 ├── SKILL.md
-└── aliyun-yunxiao-mcp/
-    └── SKILL.md
+├── aliyun-yunxiao-mcp/
+│   └── SKILL.md
+└── logix-machine-license-issuance/
+    ├── SKILL.md
+    └── references/keygen-machine-file.md
 ```
 
-根目录 `SKILL.md` 的 `name: logis` 决定安装目录名；仓库名不会决定它。`-g` 指用户级安装，`-a codex` 只安装给 Codex，避免 CLI 尝试其他 Agent。只安装云效子 Skill 时，可运行 `npx skills add logis-community/skills --full-depth --skill aliyun-yunxiao-mcp -g -a codex`。Codex 会扫描用户级 Skill 目录；若新 Skill 未立即出现，可重启 Codex。
+根目录 `SKILL.md` 的 `name: logis` 决定安装目录名；仓库名不会决定它。`-g` 指用户级安装，`-a codex` 只安装给 Codex，避免 CLI 尝试其他 Agent。只安装某个子 Skill 时，可运行 `npx skills add logis-community/skills --full-depth --skill <子Skill名> -g -a codex`。Codex 会扫描用户级 Skill 目录；若新 Skill 未立即出现，可重启 Codex。
 
 当前仓库为**私有**。具备仓库读取权限且本机 Git 认证可用的成员可使用上述命令；也可先克隆，再在仓库根目录运行 `npx skills add . -g -a codex`。GitHub 简写能否读取私有仓库取决于 Git 认证路径。
 
 ## 适用范围
 
-面向需要通过云效 MCP 查询组织、项目、工作项、代码库或流水线，以及提交 Bug 或需求的用户。中心站托管地址是 `https://openapi-rdc.aliyuncs.com/ai/mcp`；专有 Region 站使用本组织的 `https://<组织专属域名>/ai/mcp`。默认使用 OAuth 与托管地址；仅在客户端不支持 OAuth 时使用个人访问令牌（PAT）。本地 stdio 需要 Node.js 20 或更新版本。
+云效子 Skill 面向需要通过云效 MCP 查询组织、项目、工作项、代码库或流水线，以及提交 Bug 或需求的用户。中心站托管地址是 `https://openapi-rdc.aliyuncs.com/ai/mcp`；专有 Region 站使用本组织的 `https://<组织专属域名>/ai/mcp`。默认使用 OAuth 与托管地址；仅在客户端不支持 OAuth 时使用个人访问令牌（PAT）。本地 stdio 需要 Node.js 20 或更新版本。
 
 提交 Bug 或需求时，Skill 会先确认云效项目，默认指派给 `dlx`，创建后获取并返回可验证的工作项链接；若当前接口仅能提供 ID，会如实说明。找不到指定项目时会提醒联系项目负责人添加权限。
 
-详细配置及安全要求见 [`aliyun-yunxiao-mcp/SKILL.md`](aliyun-yunxiao-mcp/SKILL.md)。
+详细配置及安全要求见 [`aliyun-yunxiao-mcp/SKILL.md`](aliyun-yunxiao-mcp/SKILL.md)。Logix 单机证书的签发、验签和台账回写流程见 [`logix-machine-license-issuance/SKILL.md`](logix-machine-license-issuance/SKILL.md)。
 
 ## 验证
 
