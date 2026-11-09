@@ -1,16 +1,16 @@
 # logis-community skills
 
-本仓库提供可由 [Vercel Skills CLI](https://www.skills.sh/docs/cli) 发现的 Agent Skills。首个 Skill `aliyun-yunxiao-mcp` 指导将阿里云云效 MCP Server 接入支持 MCP 的 AI 客户端，不负责代办云效授权或保存凭证。
+本仓库提供可由 [Vercel Skills CLI](https://www.skills.sh/docs/cli) 安装的 `logis` 技能包。首个子 Skill `aliyun-yunxiao-mcp` 指导将阿里云云效 MCP Server 接入支持 MCP 的 AI 客户端，不负责代办云效授权或保存凭证。
 
 ## 安装
 
-将整个技能包安装到 Codex 的用户级目录：
+一条命令将整个技能包安装到 Codex 的用户级目录：
 
 ```sh
-npx skills add logis-community/skills --skill logis --global --agent codex --yes
+npx skills add logis-community/skills -g -a codex
 ```
 
-预期目录如下；新增的 Logis 子技能也放在 `skills/logis/` 下，可随技能包一起安装：
+在 Codex 中，目录如下；新增的 Logis 子技能放在仓库根目录的子文件夹下，可随技能包一起安装：
 
 ```text
 ~/.agents/skills/logis/
@@ -19,9 +19,9 @@ npx skills add logis-community/skills --skill logis --global --agent codex --yes
     └── SKILL.md
 ```
 
-只安装云效 Skill 时仍可运行 `npx skills add logis-community/skills --skill aliyun-yunxiao-mcp`；这种方式按 Skills CLI 默认范围安装到当前项目。若要单独安装到用户级目录，可加 `--global --agent codex --yes`，目标为 `~/.agents/skills/aliyun-yunxiao-mcp/`。Skills CLI 没有指定任意父目录的参数，`logis` 包的目录结构由包本身保留。Codex 会扫描用户级 Skill 目录；若新 Skill 未立即出现，可重启 Codex。
+根目录 `SKILL.md` 的 `name: logis` 决定安装目录名；仓库名不会决定它。`-g` 指用户级安装，`-a codex` 只安装给 Codex，避免 CLI 尝试其他 Agent。只安装云效子 Skill 时，可运行 `npx skills add logis-community/skills --full-depth --skill aliyun-yunxiao-mcp -g -a codex`。Codex 会扫描用户级 Skill 目录；若新 Skill 未立即出现，可重启 Codex。
 
-当前仓库为**私有**。具备仓库读取权限且本机 Git 认证可用的成员可使用上述命令；也可先克隆，再在仓库根目录运行 `npx skills add . --skill logis --global --agent codex --yes`。GitHub 简写能否读取私有仓库取决于 Git 认证路径。
+当前仓库为**私有**。具备仓库读取权限且本机 Git 认证可用的成员可使用上述命令；也可先克隆，再在仓库根目录运行 `npx skills add . -g -a codex`。GitHub 简写能否读取私有仓库取决于 Git 认证路径。
 
 ## 适用范围
 
@@ -29,7 +29,7 @@ npx skills add logis-community/skills --skill logis --global --agent codex --yes
 
 提交 Bug 或需求时，Skill 会先确认云效项目，默认指派给 `dlx`，创建后获取并返回可验证的工作项链接；若当前接口仅能提供 ID，会如实说明。找不到指定项目时会提醒联系项目负责人添加权限。
 
-详细配置及安全要求见 [`skills/logis/aliyun-yunxiao-mcp/SKILL.md`](skills/logis/aliyun-yunxiao-mcp/SKILL.md)。
+详细配置及安全要求见 [`aliyun-yunxiao-mcp/SKILL.md`](aliyun-yunxiao-mcp/SKILL.md)。
 
 ## 验证
 
@@ -37,7 +37,7 @@ npx skills add logis-community/skills --skill logis --global --agent codex --yes
 2. 仅执行只读请求，例如“列出我所在的组织”。确认返回的是自己的云效组织。
 3. 如需特定模块，再用对应只读操作验证；不要把写操作当作连接测试。
 
-仓库维护者可在根目录运行 `npx skills add . --list`，检查 `logis` 包与云效 Skill 的独立入口。修改云效 Skill 时须同步 `skills/logis/aliyun-yunxiao-mcp/SKILL.md` 和 `skills/aliyun-yunxiao-mcp/SKILL.md`。
+仓库维护者可在根目录运行 `npx skills add . --list` 检查 `logis` 入口；运行 `npx skills add . --list --full-depth` 可检查所有子 Skill。
 
 ## 常见错误
 
@@ -48,7 +48,7 @@ npx skills add logis-community/skills --skill logis --global --agent codex --yes
 | 401 或令牌过期 | 核对 PAT 是否有效，或重新完成 OAuth 授权；切勿把令牌贴进 Issue、聊天或日志。 |
 | 403 或部分工具失败 | 检查云效账号资源权限及 PAT 的对应 API 权限；仅补足所需权限。 |
 | 本地服务启动失败 | 检查 Node.js >= 20、`npx` 可用，以及客户端进程是否继承 `YUNXIAO_ACCESS_TOKEN`。 |
-| Skill CLI 找不到 Skill | 检查 `skills/logis/SKILL.md` 与 `skills/aliyun-yunxiao-mcp/SKILL.md`，运行 `npx skills add . --list`。 |
+| Skill CLI 找不到 Skill | 检查根目录 `SKILL.md`，运行 `npx skills add . --list`；查找子 Skill 时加 `--full-depth`。 |
 
 ## 官方来源
 
