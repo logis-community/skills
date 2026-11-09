@@ -14,7 +14,9 @@ npx skills add logis-community/skills --skill aliyun-yunxiao-mcp
 
 ## 适用范围
 
-面向需要通过云效 MCP 查询组织、项目、工作项、代码库或流水线的用户。中心站托管地址是 `https://openapi-rdc.aliyuncs.com/ai/mcp`；专有 Region 站使用本组织的 `https://<组织专属域名>/ai/mcp`。支持 OAuth 的客户端（阿里云文档列举 Qoder/QoderCLI、Claude Code）优先使用托管地址与浏览器授权；其他支持 Streamable HTTP 或本地 stdio 的客户端可使用个人访问令牌（PAT）。本地 stdio 需要 Node.js 20 或更新版本。
+面向需要通过云效 MCP 查询组织、项目、工作项、代码库或流水线，以及提交 Bug 或需求的用户。中心站托管地址是 `https://openapi-rdc.aliyuncs.com/ai/mcp`；专有 Region 站使用本组织的 `https://<组织专属域名>/ai/mcp`。默认使用 OAuth 与托管地址；仅在客户端不支持 OAuth 时使用个人访问令牌（PAT）。本地 stdio 需要 Node.js 20 或更新版本。
+
+提交 Bug 或需求时，Skill 会先确认云效项目，默认指派给 `dlx`，创建后获取并返回可验证的工作项链接；若当前接口仅能提供 ID，会如实说明。找不到指定项目时会提醒联系项目负责人添加权限。
 
 详细配置及安全要求见 [`skills/aliyun-yunxiao-mcp/SKILL.md`](skills/aliyun-yunxiao-mcp/SKILL.md)。
 
@@ -41,5 +43,6 @@ npx skills add logis-community/skills --skill aliyun-yunxiao-mcp
 
 - [阿里云：云效 MCP 工具使用说明](https://help.aliyun.com/zh/yunxiao/developer-reference/cloud-effect-mcp-tool-instructions)
 - [阿里云：个人访问令牌](https://help.aliyun.com/zh/yunxiao/user-guide/personal-access-token)
+- [阿里云：创建工作项](https://help.aliyun.com/zh/yunxiao/developer-reference/createworkitem)
 - [阿里云：云效 MCP Server 源码](https://github.com/aliyun/alibabacloud-devops-mcp-server)
 - [Vercel：Skills CLI](https://www.skills.sh/docs/cli)
