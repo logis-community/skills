@@ -22,7 +22,7 @@
   }
   ```
 
-  仅在用户已逐项确认后，才在 `attributes` 增加确认过的 `metadata` 对象或支持的额度覆盖字段，或在 `relationships` 增加已核对的 owner/group ID；确认“无”就不传这些可选项。不要传 `entitlements` 字段。`POST /licenses` 后读取 `attributes.created`、`expiry`、`name`、`metadata`、已确认的可选属性和 policy 关系；Keygen 会将 metadata 键序列化为 lower camel case，按 API 回读后的实际键和值复核，避免拼写转换导致误发。当前“订阅版 · 1 年”policy 的 `duration` 是 `31536000`，但 CE 1.7.2 签出的实际 `expiry` 可能比创建后完整日历年略早。本次一周年要求通过 `PATCH /licenses/{id}` 将 `expiry` 设为 `created` 的下一日历年同一时刻，并从 API 回读确认。只在用户要求完整一年、且该修改符合合同条款时这样做；不要把政策的字段值本身当作到期证明。
+  仅在用户已逐项确认后，才在 `attributes` 增加确认过的 `metadata` 对象或支持的额度覆盖字段，或在 `relationships` 增加已核对的 owner/group ID；确认“无”就不传这些可选项。不要传 `entitlements` 字段。`POST /licenses` 后读取 `attributes.created`、`expiry`、`name`、`metadata`、已确认的可选属性和 policy 关系；Keygen 会将 metadata 键序列化为 lower camel case，按 API 回读后的实际键和值复核，避免拼写转换导致误发。当前“订阅版 · 1 年”policy 的 `duration` 是 `31536000`，但 CE 1.7.2 签出的实际 `expiry` 可能比创建后完整日历年略早。当本次已确认的许可证有效期为一年（Skill 默认值）时，通过 `PATCH /licenses/{id}` 将 `expiry` 设为 `created` 的下一日历年同一时刻，并从 API 回读确认；若用户确认了其他期限，则按该期限设置并回读核验。不要把 policy 的 `duration` 当作许可证有效期证明。
 - `entitlements` 需先按用户确认的 code 查到准确资源 ID。若资源不存在，先核对创建账户级 entitlement 的授权及其 `name`、`code`、`metadata`，不能默默新建或改写已有资源。policy 继承项无需重复关联；license 专属项在创建 license 后、checkout 前以 `POST /licenses/{license-id}/entitlements` 关联（需 `license.entitlements.attach` 权限）：
 
   ```json
