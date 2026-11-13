@@ -14,6 +14,14 @@ description: 根据发放台账为 Logix 设备签发或重签 Keygen 单机离�
 - 只读发现和预览不产生签发变更。创建/修改许可证、关联 entitlement、激活 machine、checkout、回写台账和向外发送文件都需在本次预览后得到明确确认。参数、对象、数量、目标实例或变更范围变化时，先更新预览并重新确认。
 - 如果本机 Docker 实例不存在、实例不唯一、无法确认实例身份，或目标实例的凭据/权限不可用，停止并说明具体阻碍；不得猜测或改连其他环境，也不得在访问受阻时依据旧记录声称已完成查询。
 
+## 可复用签发 CLI
+
+先定位本次已确认的 Keygen 部署及其运维仓库，检查部署提供的 `issue_machine_license.py`、README 和 `--help`。不要依赖某台机器的绝对路径，也不要仅凭文件名假设 CLI 的能力。只有 CLI 支持本次预览中的产品、policy、期限、entitlements、metadata 和其他可选属性，并且保留摘要审批、签发前实时重查、账户公钥验签、写盘后复验时，才可复用；否则按下方流程手工执行。
+
+当前通用 CLI 的私有请求 JSON 显式包含 `name`、设备 `fingerprint`、`metadata`、`product_name`、`policy_name`、`policy_duration_seconds`、`license_term_months`、`checkout_ttl_seconds`、`max_file_bytes` 和 `entitlement_codes`。`metadata` 无值时写 `{}`；`policy_duration_seconds` 可为 `null`，entitlement 清单可为空。许可证期限、Keygen checkout TTL 和客户端文件大小限制需分别根据本次确认值配置；Logix 的一年期配置只作为示例。CLI 当前不支持的已确认字段（如 owner、group 或额度覆盖属性）不得跳过或丢弃，改走手工流程。
+
+使用 CLI 前确认它的 checkout 同时请求并验证 `license`、`license.product`、`license.policy` 和 `license.entitlements`，并完整核验签名内的产品、policy 及 entitlement 快照。请求文件权限设为 `0600`。运行 `preview` 后向用户展示完整预览与 `approval_digest`，不展示设备指纹；仅在用户明确确认该预览后，才用同一请求文件、输出路径和摘要运行 `issue --approve-preview <approval_digest>`。状态或摘要不匹配时停止；禁止绕过预览审批或验签。CLI 只负责 Keygen 资源、checkout、验证和私有证书文件，台账回写及发送仍按本 Skill 后续步骤执行。
+
 ## 签发流程
 
 ### 1. 核对记录与部署
