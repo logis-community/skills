@@ -1,12 +1,13 @@
 ---
 name: logis
-description: Logis 技能包入口；按任务选择云效 MCP 接入与工作项提交，或 Logix Keygen 单机离线证书签发流程。
+description: Logis 技能包入口；按任务选择 Logix 智能仿真系统 MCP 接入、云效 MCP 与工作项提交，或 Logix Keygen 单机离线证书签发。
 ---
 
 # Logis 技能包
 
 本目录用于将 Logis 技能集中安装到一个位置。根据用户的任务读取并使用对应子技能：
 
+- 将外部 AI 客户端接入 Logix 智能仿真系统 MCP，或排查其连接与授权：[`logix-mcp-setup/SKILL.md`](logix-mcp-setup/SKILL.md)。
 - 云效 MCP 接入、提交 Bug 或需求：[`aliyun-yunxiao-mcp/SKILL.md`](aliyun-yunxiao-mcp/SKILL.md)。
 - 从发放台账签发或重签 Logix 单机离线机器证书：[`logix-machine-license-issuance/SKILL.md`](logix-machine-license-issuance/SKILL.md)。
 
