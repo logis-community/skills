@@ -1,6 +1,6 @@
 # logis-community skills
 
-本仓库提供可由 [Vercel Skills CLI](https://www.skills.sh/docs/cli) 安装的 `logis` 技能包。`aliyun-yunxiao-mcp` 指导接入阿里云云效 MCP；`logix-machine-license-issuance` 指导从台账签发与重签 Logix Keygen 单机离线证书。仓库不保存凭据、证书或个人记录。
+本仓库提供可由 Vercel Skills CLI 安装的 `logis` 技能包，包含云效 MCP 接入、Logix 智能仿真系统 MCP 接入与操作指南，以及 Logix 单机离线证书签发技能。仓库不保存凭据、证书或个人记录。[Vercel Skills CLI](https://www.skills.sh/docs/cli)
 
 用 [`logix-mcp-setup`](logix-mcp-setup/SKILL.md) 将外部 AI 客户端接入 Logix 智能仿真系统，并验证 OAuth 授权和工作台连接。
 
@@ -23,9 +23,14 @@ npx skills add logis-community/skills -g -a codex
 │   └── SKILL.md
 ├── logix-mcp-setup/
 │   └── SKILL.md
-└── logix-machine-license-issuance/
+├── logix-machine-license-issuance/
+│   ├── SKILL.md
+│   └── references/keygen-machine-file.md
+└── logix-simulation-guide/
     ├── SKILL.md
-    └── references/keygen-machine-file.md
+    └── references/
+        ├── operations.md
+        └── simulation-rules.md
 ```
 
 根目录 `SKILL.md` 的 `name: logis` 决定安装目录名；仓库名不会决定它。`-g` 指用户级安装，`-a codex` 只安装给 Codex，避免 CLI 尝试其他 Agent。只安装某个子 Skill 时，可运行 `npx skills add logis-community/skills --full-depth --skill <子Skill名> -g -a codex`。Codex 会扫描用户级 Skill 目录；若新 Skill 未立即出现，可重启 Codex。
@@ -39,6 +44,8 @@ npx skills add logis-community/skills -g -a codex
 提交 Bug 或需求时，Skill 会先确认云效项目，默认指派给 `dlx`，创建后获取并返回可验证的工作项链接；若当前接口仅能提供 ID，会如实说明。找不到指定项目时会提醒联系项目负责人添加权限。当前 Qoder CLI 没有独立的 MCP OAuth 登录子命令；无法由 agent 发起的授权入口会如实说明。
 
 详细配置及安全要求见 [`aliyun-yunxiao-mcp/SKILL.md`](aliyun-yunxiao-mcp/SKILL.md)。Logix 单机证书的签发、验签和台账回写流程见 [`logix-machine-license-issuance/SKILL.md`](logix-machine-license-issuance/SKILL.md)。
+
+Logix 智能仿真系统操作指南覆盖案例搭建、业务数据、仿真运行与结果核对，以客户端 4.1.4-15 为基准，并注明 4.1.4-14 的 Excel 储位导入差异。[Logix 智能仿真系统操作指南](logix-simulation-guide/SKILL.md)
 
 ## 验证
 
