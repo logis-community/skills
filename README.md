@@ -1,6 +1,8 @@
 # logis-community skills
 
-本仓库提供可由 Vercel Skills CLI 安装的 `logis` 技能包，包含云效 MCP 接入、Logix 智能仿真系统操作指南和 Logix 单机离线证书签发技能。仓库不保存凭据、证书或个人记录。[Vercel Skills CLI](https://www.skills.sh/docs/cli)
+本仓库提供可由 Vercel Skills CLI 安装的 `logis` 技能包，包含云效 MCP 接入、Logix 智能仿真系统 MCP 接入与操作指南，以及 Logix 单机离线证书签发技能。仓库不保存凭据、证书或个人记录。[Vercel Skills CLI](https://www.skills.sh/docs/cli)
+
+用 [`logix-mcp-setup`](logix-mcp-setup/SKILL.md) 将外部 AI 客户端接入 Logix 智能仿真系统，并验证 OAuth 授权和工作台连接。
 
 云效子 Skill 会识别当前 AI 客户端并配置云效 MCP；需要 OAuth 登录时先征得用户同意，再由 agent 发起登录，用户在浏览器完成授权。
 
@@ -18,6 +20,8 @@ npx skills add logis-community/skills -g -a codex
 ~/.agents/skills/logis/
 ├── SKILL.md
 ├── aliyun-yunxiao-mcp/
+│   └── SKILL.md
+├── logix-mcp-setup/
 │   └── SKILL.md
 ├── logix-machine-license-issuance/
 │   ├── SKILL.md
